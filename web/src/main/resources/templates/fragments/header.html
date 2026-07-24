@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+<nav th:fragment="header"
+     class="navbar navbar-expand-lg navbar-dark shadow-lg">
+
+    <div class="container-fluid px-4">
+
+        <!-- Logo -->
+
+        <a class="navbar-brand logo" th:href="@{/}">
+            <i class="bi bi-film"></i>
+            FilmTokio
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+
+            <!-- Buscador -->
+
+            <form class="d-flex mx-auto search-box"
+                  th:action="@{/movies/search}"
+                  method="get">
+
+                <input class="form-control search-input"
+                       type="search"
+                       name="title"
+                       placeholder="Buscar películas..."
+                       autocomplete="off">
+
+                <button class="btn btn-search">
+
+                    <i class="bi bi-search"></i>
+
+                </button>
+
+            </form>
+
+            <!-- Navegación -->
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <!-- Videoteca -->
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+
+                    <a class="nav-link"
+                    th:href="@{/movies/search}">
+
+                        <i class="bi bi-collection-play me-1"></i>
+
+                        Videoteca
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link"
+                       th:href="@{/movies/new}">
+
+                        <i class="bi bi-plus-circle me-1"></i>
+
+                        Nueva película
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link"
+                       th:href="@{/artists/new}">
+
+                        <i class="bi bi-person-video3 me-1"></i>
+
+                        Crear artista
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link"
+                       th:href="@{/users/new}">
+
+                        <i class="bi bi-person-plus me-1"></i>
+
+                        Crear usuario
+
+                    </a>
+
+                </li>
+
+                <!-- Usuario NO autenticado -->
+
+                <li class="nav-item"
+                    sec:authorize="!isAuthenticated()">
+
+                    <a class="nav-link auth-link"
+                    th:href="@{/login}">
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+
+                        Login
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item"
+                    sec:authorize="!isAuthenticated()">
+
+                    <a class="nav-link auth-link"
+                    th:href="@{/signup}">
+
+                        <i class="bi bi-person-plus"></i>
+
+                        Signup
+
+                    </a>
+
+                </li>
+
+
+
+                <!-- Usuario autenticado -->
+
+                <li class="nav-item dropdown"
+                    sec:authorize="isAuthenticated()">
+
+
+                    <a class="nav-link dropdown-toggle auth-user"
+                    href="#"
+                    data-bs-toggle="dropdown">
+
+
+                        <i class="bi bi-person-circle"></i>
+
+
+                        <span sec:authentication="name"></span>
+
+
+                    </a>
+
+
+                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+
+
+                        <li>
+
+
+                            <form method="post"
+                                th:action="@{/logout}">
+
+
+                                <button class="dropdown-item logout-btn">
+
+
+                                    <i class="bi bi-box-arrow-right me-2"></i>
+
+
+                                    Logout
+
+
+                                </button>
+
+
+                            </form>
+
+
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+</body>
+
+</html>

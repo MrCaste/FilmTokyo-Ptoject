@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    background: #111;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    background: #1c1c1c;
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid #ff7b00;
+    box-shadow: 0 0 25px rgba(255, 123, 0, .25);
+}
+
+.logo-icon {
+    font-size: 4rem;
+    color: #ff7b00;
+    text-shadow: 0 0 18px #ff7b00;
+}
+
+.title {
+    margin-top: 10px;
+    color: #ff7b00;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: #bbb;
+}
+
+.form-label {
+    color: #ddd;
+}
+
+.input-group-text {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    color: #ff7b00;
+}
+
+.form-control {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    color: white;
+}
+
+.form-control:focus {
+    background: #2d2d2d;
+    color: white;
+    border-color: #ff7b00;
+    box-shadow: 0 0 10px rgba(255,123,0,.4);
+}
+
+.btn-login {
+    background: #ff7b00;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.btn-login:hover {
+    background: #ff9500;
+    box-shadow: 0 0 15px #ff7b00;
+}
+
+.back-home {
+    color: #ff7b00;
+    text-decoration: none;
+}
+
+.back-home:hover {
+    color: #ffa43a;
+}
+
+hr {
+    border-color: #444;
+}
+
+/* ERRORES FORMULARIO */
+
+.form-error{
+
+    background:rgba(255,123,0,.08);
+
+    border:1px solid #ff7b00;
+
+    color:#ff9d32;
+
+    border-radius:15px;
+
+    padding:12px 18px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    box-shadow:
+        0 0 15px rgba(255,123,0,.35);
+
+    animation: errorGlow .4s ease;
+
+}
+
+
+.form-error i{
+
+    margin-right:8px;
+
+}
+
+
+@keyframes errorGlow{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+

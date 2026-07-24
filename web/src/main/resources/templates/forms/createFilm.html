@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nueva Película | FilmTokio</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/login-signup.css}">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <div class="text-center mb-4">
+
+            <i class="bi bi-film logo-icon"></i>
+
+            <h1 class="title">
+                FilmTokio
+            </h1>
+
+            <p class="subtitle">
+                Crear nueva película
+            </p>
+
+        </div>
+
+        <form th:action="${movie != null}
+        ? @{/movies/edit/{id}(id=${movie.id})}
+        : @{/movies/create}"
+        method="post"
+        enctype="multipart/form-data">
+
+            <!-- Errores -->
+            <div th:if="${errorMessage}" class="form-error">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- Mensaje de éxito -->
+
+            <div th:if="${success}" class="alert alert-success">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span th:text="${success}"></span>
+
+            </div>
+
+            <!-- Título -->
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Título
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-card-heading"></i>
+                    </span>
+
+                    <input
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            placeholder="Introduce el título"
+                            th:value="${movie != null ? movie.title : ''}">
+
+                </div>
+
+            </div>
+
+            <!-- Año -->
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Año de estreno
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-calendar-event"></i>
+                    </span>
+
+                    <input
+                            type="number"
+                            name="releaseYear"
+                            class="form-control"
+                            placeholder="Ej: 2025"
+                            min="1"
+                            max="9999"
+                            th:value="${movie != null ? movie.releaseYear : ''}">
+
+                </div>
+
+            </div>
+
+            <!-- Director -->
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Director
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-camera-reels-fill"></i>
+                    </span>
+
+                    <select name="director" class="form-control">
+
+                        <option value="">Seleccione un director</option>
+
+                        <option th:each="artist : ${artistList}"
+                                th:value="${artist.id}"
+                                th:text="${artist.name + ' ' + artist.surname}"
+                                th:selected="${movie != null and movie.director != null and artist.id.equals(movie.director.id)}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <!-- Actores -->
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Actores
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-people-fill"></i>
+                    </span>
+
+                    <select name="actorList" class="form-control" multiple>
+
+                        <option th:each="artist : ${artistList}"
+                                th:value="${artist.id}"
+                                th:text="${artist.name + ' ' + artist.surname}"
+                                th:selected="${movie != null && #lists.contains(movie.actors.![id], artist.id)}">
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <small class="text-secondary">
+                    Mantén pulsada la tecla <strong>Ctrl</strong> (o <strong>Cmd</strong> en Mac) para seleccionar varios actores.
+                </small>
+
+            </div>
+
+            <!-- Poster -->
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Poster
+                </label>
+
+                <div th:if="${movie != null}" class="mb-3">
+
+                    <img th:src="@{'/uploads/' + ${movie.poster}}"
+                        style="width:180px;border-radius:10px;">
+
+                </div>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-image-fill"></i>
+                    </span>
+
+                    <input
+                            type="file"
+                            name="poster"
+                            class="form-control"
+                            accept="image/*">
+
+                </div>
+
+            </div>
+
+            <!-- Botón -->
+            <button class="btn btn-login w-100" type="submit">
+
+                <i class="bi bi-plus-circle-fill" th:if="${movie == null}"></i>
+                <i class="bi bi-floppy-fill" th:if="${movie != null}"></i>
+
+                <span th:text="${movie == null ? 'Crear película' : 'Actualizar película'}">
+                    Crear película
+                </span>
+
+            </button>
+
+        </form>
+
+        <hr class="my-4">
+
+        <div class="text-center">
+
+            <a th:href="@{/}" class="back-home">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Volver a Inicio
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
