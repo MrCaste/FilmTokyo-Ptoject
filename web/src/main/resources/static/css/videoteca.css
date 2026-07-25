@@ -1,3 +1,158 @@
+/* ==========================
+   HERO CATÁLOGO
+========================== */
+
+.catalog-hero{
+
+    position:relative;
+
+    height:300px;
+
+    margin:0 auto 40px;
+
+    border-radius:0 0 25px 25px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    border-bottom:1px solid rgba(255,123,0,.15);
+
+    background:
+        radial-gradient(circle at top,
+            rgba(255,123,0,.18),
+            transparent 45%),
+        linear-gradient(
+            180deg,
+            #1a1a1a 0%,
+            #111 45%,
+            #090909 100%);
+}
+
+.catalog-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:650px;
+
+    height:650px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle,
+            rgba(255,123,0,.18) 0%,
+            rgba(255,123,0,.08) 40%,
+            transparent 70%);
+
+    top:-220px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    animation:pulseGlow 6s ease-in-out infinite;
+}
+
+.catalog-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.02),
+            transparent 20%,
+            transparent 80%,
+            rgba(0,0,0,.35));
+
+    pointer-events:none;
+}
+
+.catalog-overlay{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:20px;
+}
+
+.catalog-overlay h1{
+
+    font-size:3.5rem;
+
+    font-weight:800;
+
+    color:#ff7b00;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 12px #ff7b00,
+        0 0 30px rgba(255,123,0,.7);
+
+    margin-bottom:20px;
+}
+
+.catalog-overlay p{
+
+    font-size:1.2rem;
+
+    color:#d0d0d0;
+
+    max-width:700px;
+
+    margin:auto;
+}
+
+.catalog-overlay i{
+
+    margin-right:12px;
+}
+
+@keyframes pulseGlow{
+
+    0%{
+
+        transform:translateX(-50%) scale(.95);
+
+        opacity:.45;
+
+    }
+
+    50%{
+
+        transform:translateX(-50%) scale(1.08);
+
+        opacity:.9;
+
+    }
+
+    100%{
+
+        transform:translateX(-50%) scale(.95);
+
+        opacity:.45;
+
+    }
+
+}
+
 .movie-container{
             max-width:1400px;
             margin:auto;

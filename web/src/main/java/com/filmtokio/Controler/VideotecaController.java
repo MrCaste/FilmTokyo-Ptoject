@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.filmtokio.DTO.MovieCardDTO;
@@ -26,6 +27,7 @@ import com.filmtokio.Service.Reviews.ReviewService;
 import com.filmtokio.Service.Users.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Controller
@@ -40,11 +42,18 @@ public class VideotecaController {
     public final UserService userService;
 
     @GetMapping("/search")
-    public String getFilms(Model model) {
+    public String searchMovies(
+            @RequestParam(required = false) String title,
+            Model model,
+            HttpServletRequest request) {
 
-        List<MovieCardDTO> movieCardList = movieService.getAllMovies();
+        List<MovieCardDTO> movies = movieService.search(title);
 
-        model.addAttribute("movieCardList", movieCardList);
+        model.addAttribute("movieCardList", movies);
+
+        if ("true".equalsIgnoreCase(request.getHeader("HX-Request"))) {
+            return "fragments/movie-list :: movieList";
+        }
 
         return "vistas/videoteca";
     }

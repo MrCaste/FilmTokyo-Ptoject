@@ -10,9 +10,11 @@
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" th:href="@{/css/login-signup.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+
     <link rel="stylesheet" th:href="@{/css/videoteca.css}">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 
 </head>
 
@@ -20,23 +22,26 @@
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<div class="movie-container">
+<section class="catalog-hero">
 
-    <div class="text-center mb-5">
+    <div class="catalog-overlay">
 
-        <i class="bi bi-film logo-icon"></i>
-
-        <h1 class="title">
-            FilmTokio
+        <h1>
+            <i class="bi bi-collection-play-fill"></i>
+            Catálogo de Películas
         </h1>
 
-        <p class="subtitle">
-            Catálogo de películas
+        <p>
+            Descubre y valora las mejores películas de FilmTokio.
         </p>
 
     </div>
 
-    <div class="row g-4">
+</section>
+
+<div class="movie-container">
+
+    <div class="row g-4" id="movie-list">
 
         <div class="col-lg-3 col-md-4 col-sm-6"
              th:each="movie : ${movieCardList}">

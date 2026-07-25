@@ -5,7 +5,7 @@
 <body>
 
 <nav th:fragment="header"
-     class="navbar navbar-expand-lg navbar-dark shadow-lg">
+     class="ft-header navbar navbar-expand-lg navbar-dark shadow-lg">
 
     <div class="container-fluid px-4">
 
@@ -29,20 +29,24 @@
 
             <!-- Buscador -->
 
+            <!-- Buscador -->
+
             <form class="d-flex mx-auto search-box"
-                  th:action="@{/movies/search}"
-                  method="get">
+                hx-get="/movies/search"
+                hx-trigger="keyup changed delay:300ms from:input"
+                hx-target="#movie-list"
+                hx-swap="innerHTML"
+                th:if="${showSearch}">
 
-                <input class="form-control search-input"
-                       type="search"
-                       name="title"
-                       placeholder="Buscar películas..."
-                       autocomplete="off">
+                <input
+                    class="form-control search-input"
+                    type="search"
+                    name="title"
+                    autocomplete="off"
+                    placeholder="Buscar películas...">
 
-                <button class="btn btn-search">
-
+                <button type="submit" class="btn btn-search">
                     <i class="bi bi-search"></i>
-
                 </button>
 
             </form>
@@ -53,7 +57,7 @@
 
                 <!-- Videoteca -->
 
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item">
 
                     <a class="nav-link"
                     th:href="@{/movies/search}">

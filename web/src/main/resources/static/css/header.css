@@ -1,0 +1,195 @@
+:root{
+    --background:#090909;
+    --card:#181818;
+    --orange:#ff7b00;
+    --orange-light:#ff9d32;
+    --text:#ffffff;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.ft-header{
+
+    background:#111;
+
+    border-bottom:1px solid rgba(255,123,0,.2);
+
+    backdrop-filter:blur(15px);
+
+}
+
+.ft-header .logo{
+
+    font-size:1.8rem;
+
+    font-weight:700;
+
+    color:var(--orange)!important;
+
+    letter-spacing:2px;
+
+    text-shadow:0 0 10px var(--orange);
+
+}
+
+.ft-header .logo:hover{
+
+    color:var(--orange-light)!important;
+
+}
+
+.ft-header .search-box{
+
+    width:40%;
+
+}
+
+.ft-header .search-input{
+
+    background:#1b1b1b;
+
+    border:1px solid #333;
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:12px 20px;
+
+}
+
+.ft-header .search-input::placeholder{
+
+    color:#888;
+
+}
+
+.ft-header .search-input:focus{
+
+    background:#1b1b1b;
+
+    color:white;
+
+    border-color:var(--orange);
+
+    box-shadow:0 0 12px rgba(255,123,0,.5);
+
+}
+
+.ft-header .btn-search{
+
+    background:var(--orange);
+
+    border:none;
+
+    color:white;
+
+    border-radius:30px;
+
+    width:55px;
+
+    margin-left:10px;
+
+    transition:.3s;
+
+}
+
+.ft-header .btn-search:hover{
+
+    background:var(--orange-light);
+
+    box-shadow:0 0 15px rgba(255,123,0,.8);
+
+}
+
+.ft-header .nav-link{
+
+    color:#ddd!important;
+
+    margin-left:15px;
+
+    transition:.3s;
+
+}
+
+.ft-header .nav-link:hover{
+
+    color:var(--orange)!important;
+
+}
+
+.ft-header .auth-link{
+
+    border:1px solid rgba(255,123,0,.4);
+
+    border-radius:30px;
+
+    padding:8px 18px!important;
+
+    margin-left:10px;
+
+}
+
+.ft-header .auth-link:hover{
+
+    background:var(--orange);
+
+    color:white!important;
+
+    box-shadow:0 0 15px rgba(255,123,0,.7);
+
+}
+
+.ft-header .auth-user{
+
+    color:var(--orange)!important;
+
+    font-weight:bold;
+
+}
+
+.ft-header .auth-user:hover{
+
+    color:var(--orange-light)!important;
+
+}
+
+.ft-header .custom-dropdown{
+
+    background:#181818;
+
+    border:1px solid rgba(255,123,0,.3);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+.ft-header .dropdown-item{
+
+    background:#181818;
+
+    color:white;
+
+}
+
+.ft-header .dropdown-item:hover{
+
+    background:var(--orange);
+
+    color:white;
+
+}
+
+.ft-header .logout-btn{
+
+    width:100%;
+
+    border:none;
+
+    padding:12px 20px;
+
+}

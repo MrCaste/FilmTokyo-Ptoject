@@ -116,6 +116,19 @@ public class MovieService {
         return movieRepository.findById(movieId).map(this::toDTO);
     }
 
+    public List<MovieCardDTO> search(String title) {
+
+        if (title == null || title.isBlank()) {
+            return getAllMovies();
+        }
+
+        return movieRepository
+                .findByTitleContainingIgnoreCase(title)
+                .stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
 
 
 

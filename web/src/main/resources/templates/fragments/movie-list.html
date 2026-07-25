@@ -1,0 +1,38 @@
+<th:block th:fragment="movieList">
+
+    <div class="col-lg-3 col-md-4 col-sm-6"
+         th:each="movie : ${movieCardList}">
+
+        <a th:href="@{/movies/{id}(id=${movie.id})}"
+           class="text-decoration-none">
+
+            <div class="movie-card">
+
+                <img class="movie-poster"
+                     th:src="@{'/uploads/' + ${movie.poster}}">
+
+                <div class="movie-body">
+
+                    <div class="movie-title"
+                         th:text="${movie.title}">
+                    </div>
+
+                    <div class="movie-year">
+                        <i class="bi bi-calendar-event"></i>
+                        <span th:text="${movie.releaseYear}"></span>
+                    </div>
+
+                    <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <span th:text="${movie.averageRating}"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</th:block>
