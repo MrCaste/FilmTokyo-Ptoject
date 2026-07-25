@@ -40,10 +40,14 @@ public class ReviewController {
 
             return "redirect:/movies/" + id;
         }
-
-        redirectAttributes.addFlashAttribute("success", "Review created successfully!");
         
-        reviewService.createReview(reviewFormData, userService.getAuthenticatedUser());
+        if (reviewService.hasReviewed(id, userService.getAuthenticatedUser().getId())) {
+            reviewService.updateReview(reviewFormData.getId(), userService.getAuthenticatedUser(), reviewFormData);
+            redirectAttributes.addFlashAttribute("success", "Review updated successfully!");
+        } else {
+            reviewService.createReview(reviewFormData, userService.getAuthenticatedUser());
+            redirectAttributes.addFlashAttribute("success", "Review created successfully!");
+        }
         
         return "redirect:/movies/" + id;
     }

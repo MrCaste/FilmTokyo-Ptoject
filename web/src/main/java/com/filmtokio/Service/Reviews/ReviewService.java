@@ -45,15 +45,11 @@ public class ReviewService {
 
     }
 
-    public void updateReview(Long reviewId, ReviewFormData formData) {
+    public void updateReview(Long MovieId, User user, ReviewFormData formData) {
 
-        Optional<Reviews> optionalReview = reviewsRepository.findById(reviewId);
+        Movies movie = movieRepository.findById(MovieId).orElseThrow(() -> new EntityNotFoundException("No se encontro la pelicula"));
 
-        if (optionalReview.isEmpty()) {
-            throw new EntityNotFoundException("No existe la review con id " + reviewId);
-        }
-
-        Reviews review = optionalReview.get();
+        Reviews review = reviewsRepository.findByMovieAndUser(movie, user).orElseThrow(() -> new EntityNotFoundException("No se encontro la review"));
 
         review.setRating(formData.getRating());
         review.setComment(formData.getComment());

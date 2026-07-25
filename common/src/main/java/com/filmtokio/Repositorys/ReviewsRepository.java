@@ -28,4 +28,6 @@ public interface ReviewsRepository extends CrudRepository<Reviews, Long> {
     Optional<Reviews> findByMovieIdAndUserId(Long movieId, Long userId);
 
     boolean existsByMovieIdAndUserId(Long movieId, Long userId);
+
+    Optional<Reviews> findByMovieAndUser(Movies movie, User user);
 }
