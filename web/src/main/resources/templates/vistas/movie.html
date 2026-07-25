@@ -21,7 +21,7 @@
 
     <!-- CSS de la película -->
     <link rel="stylesheet" th:href="@{/css/movie.css}">
-    
+
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 
 </head>
@@ -106,11 +106,35 @@
     <section class="review-section"
              th:if="${#authorization.expression('isAuthenticated()')}">
 
+        <!-- Mensaje de éxito -->
+
+        <div th:if="${success}" class="alert alert-success">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${success}"></span>
+
+        </div>
+
+        <!-- Mensaje de error -->
+
+        <div th:if="${errorMessage}" class="form-error">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <span th:text="${errorMessage}"></span>
+
+        </div>
+
         <h2>Tu valoración</h2>
 
         <form class="review-form"
               th:action="@{/movies/{id}/review(id=${movie.id})}"
               method="post">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${movie.id}">
 
             <div class="rating">
 

@@ -41,6 +41,8 @@ public class CreateUserController {
             log.error("Validation errors {}", bindingResults.getAllErrors());
 
             model.addAttribute("errorMessage", bindingResults.getFieldError().getDefaultMessage());
+
+            return "redirect:/users/new";
         }
 
         redirectAttributes.addFlashAttribute("success", "User created successfully!");

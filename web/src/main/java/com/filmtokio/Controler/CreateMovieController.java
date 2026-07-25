@@ -49,6 +49,8 @@ public class CreateMovieController {
             log.error("Validation errors {}", bindingResult.getAllErrors());
 
             model.addAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
+
+            return "redirect:/movies/new";
         }
 
         redirectAttributes.addFlashAttribute("success", "Movie added successfully!");
