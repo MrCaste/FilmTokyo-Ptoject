@@ -20,10 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.filmtokio.DTO.MovieCardDTO;
-import com.filmtokio.DTO.ReviewDTO;
 import com.filmtokio.FormData.MovieFormData;
 import com.filmtokio.Service.Movies.MovieService;
-import com.filmtokio.Service.Reviews.ReviewService;
+import com.filmtokio.Service.Reviews.ReviewRestService;
 import com.filmtokio.Service.Users.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -38,7 +37,7 @@ public class VideotecaController {
 
     private final ArtistService artistService;
     public final MovieService movieService;
-    public final ReviewService reviewService;
+    public final ReviewRestService reviewService;
     public final UserService userService;
 
     @GetMapping("/search")
@@ -63,14 +62,12 @@ public class VideotecaController {
         
         MovieCardDTO movie = movieService.getMovieById(id)
         .orElseThrow(() -> new EntityNotFoundException("Película no encontrada"));
-    
-        List<ReviewDTO> reviews = reviewService.getMoviesReviews(id);
 
         model.addAttribute("movie", movie);
-        model.addAttribute("reviews", reviews);
+        model.addAttribute("reviews", reviewService.getMovieReviews(id));
 
         if (userService.isAuthenticated()) {
-            model.addAttribute("userReview", reviewService.getUserReview(id, userService.getAuthenticatedUser().getId()).orElse(null));
+            model.addAttribute("userReview", reviewService.getUserReview(id, userService.getAuthenticatedUser().getId()));
         }
 
         return "vistas/movie";

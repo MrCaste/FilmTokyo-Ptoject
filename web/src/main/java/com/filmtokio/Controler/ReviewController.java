@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.filmtokio.FormData.ReviewFormData;
-import com.filmtokio.Service.Reviews.ReviewService;
+import com.filmtokio.Service.Reviews.ReviewRestService;
 import com.filmtokio.Service.Users.UserService;
 
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    public final ReviewService reviewService;
+    public final ReviewRestService reviewService;
     public final UserService userService;
 
     @PostMapping("/movies/{id}/review")
@@ -42,10 +42,12 @@ public class ReviewController {
         }
         
         if (reviewService.hasReviewed(id, userService.getAuthenticatedUser().getId())) {
-            reviewService.updateReview(reviewFormData.getId(), userService.getAuthenticatedUser(), reviewFormData);
+
+            reviewService.updateReview(reviewFormData.getId(), reviewFormData);
             redirectAttributes.addFlashAttribute("success", "Review updated successfully!");
         } else {
-            reviewService.createReview(reviewFormData, userService.getAuthenticatedUser());
+
+            reviewService.createReview(reviewFormData);
             redirectAttributes.addFlashAttribute("success", "Review created successfully!");
         }
         

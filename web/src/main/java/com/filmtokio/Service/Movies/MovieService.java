@@ -21,7 +21,7 @@ import com.filmtokio.FormData.MovieFormData;
 import com.filmtokio.Repositorys.MovieArtistRepository;
 import com.filmtokio.Repositorys.MovieRepository;
 import com.filmtokio.Service.Artists.ArtistService;
-import com.filmtokio.Service.Reviews.ReviewService;
+import com.filmtokio.Service.Reviews.ReviewRestService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class MovieService {
     public final ArtistService artistService;
     public final MovieRepository movieRepository;
     public final FileStorageService fileStorageService;
-    public final ReviewService reviewService;
+    public final ReviewRestService reviewService;
     public final MovieArtistRepository movieArtistRepository;
 
     public void createMovie (MovieFormData formData) throws IOException {
