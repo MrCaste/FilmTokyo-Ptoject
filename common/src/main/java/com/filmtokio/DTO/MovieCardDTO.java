@@ -21,6 +21,7 @@ public class MovieCardDTO {
     private String poster;
     private Double averageRating;
     private ArtistDTO director;
+    private boolean reviewServiceAvailable;
     private List<ArtistDTO> actors;
 
 }

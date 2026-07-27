@@ -62,14 +62,18 @@
 
                     </div>
 
-                    <div class="average-rating">
+                    <div class="average-rating" th:if="${movie.reviewServiceAvailable}">
 
                         <span class="big-star">★</span>
 
                         <span class="score"
-                              th:text="${movie.averageRating} ?: 'Sin valorar'">
+                            th:text="${movie.averageRating} ?: 'Sin valorar'">
                         </span>
 
+                    </div>
+
+                    <div class="average-rating" th:unless="${movie.reviewServiceAvailable}">
+                        Servicio de valoraciones no disponible
                     </div>
 
                     <h3>Reparto</h3>
@@ -104,7 +108,7 @@
     <!-- REVIEW -->
 
     <section class="review-section"
-             th:if="${#authorization.expression('isAuthenticated()')}">
+             th:if="${#authorization.expression('isAuthenticated()') and reviewServiceAvailable}">
 
         <!-- Mensaje de éxito -->
 
@@ -183,11 +187,21 @@
 
     </section>
 
+    <section class="review-section"
+             th:if="${#authorization.expression('isAuthenticated()') and !reviewServiceAvailable}">
+
+        <div class="alert alert-warning">
+            El servicio de valoraciones no está disponible en este momento.
+        </div>
+
+    </section>
+
 
 
     <!-- REVIEWS -->
 
-    <section class="reviews">
+    <section class="reviews"
+             th:if="${reviewServiceAvailable}">
 
         <h2>
 
@@ -237,6 +251,15 @@
             </p>
 
         </div>
+
+    </section>
+
+    <section class="reviews"
+             th:unless="${reviewServiceAvailable}">
+
+        <h2>Opiniones</h2>
+
+        <p>El servicio de valoraciones no está disponible.</p>
 
     </section>
 

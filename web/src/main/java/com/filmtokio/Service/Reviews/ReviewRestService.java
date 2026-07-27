@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 
 import com.filmtokio.DTO.ReviewDTO;
@@ -23,66 +24,84 @@ public class ReviewRestService {
     private final RestClient restClient;
     
 
-    public List<ReviewDTO> getMovieReviews(Long movieId) {
+        public List<ReviewDTO> getMovieReviews(Long movieId) {
 
-        return restClient.get()
-                .uri("/api/review/films/{id}", movieId)
-                .retrieve()
-                .body(new ParameterizedTypeReference<List<ReviewDTO>>() {});
-    }
+                try {
+                        return restClient.get()
+                                .uri("/api/review/films/{filmId}", movieId)
+                                .retrieve()
+                                .body(new ParameterizedTypeReference<List<ReviewDTO>>() {});
 
-    public ReviewDTO getUserReview(Long movieId, Long userId) {
+                } catch (ResourceAccessException e) {
+                        log.warn("Servicio no disponible");
+                        return null;
+                }
+        }
 
-        return restClient.get()
-                .uri("/api/review/films/{filmId}/users/{userId}", movieId, userId)
-                .retrieve()
-                .body(ReviewDTO.class);
-    }
+        public ReviewDTO getUserReview(Long movieId, Long userId) {
 
-    public void createReview(ReviewFormData formData) {
+                try {
+                        return restClient.get()
+                                .uri("/api/review/films/{filmId}/users/{userId}", movieId, userId)
+                                .retrieve()
+                                .body(ReviewDTO.class);
 
-        CreateReviewRequest request = CreateReviewRequest.builder()
-                .filmId(formData.getId())
-                .rating(formData.getRating())
-                .comment(formData.getComment())
-                .build();
+                } catch (ResourceAccessException e) {
+                        log.warn("Servicio no disponible");
+                        return null;
+                }
+        }
 
-        restClient.post()
-                .uri("/api/ratings")
-                .body(request)
-                .retrieve()
-                .toBodilessEntity();
-    }
+        public void createReview(ReviewFormData formData) {
 
-    public boolean hasReviewed(Long movieId, Long userId) {
+                CreateReviewRequest request = CreateReviewRequest.builder()
+                        .filmId(formData.getId())
+                        .rating(formData.getRating())
+                        .comment(formData.getComment())
+                        .build();
 
-        return restClient.get()
-                .uri("/api/ratings/films/{filmId}/users/{userId}/exists", movieId, userId)
-                .retrieve()
-                .body(Boolean.class);
-    }
+                restClient.post()
+                        .uri("/api/ratings")
+                        .body(request)
+                        .retrieve()
+                        .toBodilessEntity();
+        }
 
-    public void updateReview(Long reviewId, ReviewFormData formData) {
+        public boolean hasReviewed(Long movieId, Long userId) {
 
-        UpdateReviewRequest request = UpdateReviewRequest.builder()
-                .rating(formData.getRating())
-                .comment(formData.getComment())
-                .build();
+                return restClient.get()
+                        .uri("/api/ratings/films/{filmId}/users/{userId}/exists", movieId, userId)
+                        .retrieve()
+                        .body(Boolean.class);
+        }
 
-        restClient.put()
-                .uri("/api/ratings/{reviewId}", reviewId)
-                .body(request)
-                .retrieve()
-                .toBodilessEntity();
-    }
+        public void updateReview(Long reviewId, ReviewFormData formData) {
 
-    public Double getAverageRating(Long movieId) {
+                UpdateReviewRequest request = UpdateReviewRequest.builder()
+                        .rating(formData.getRating())
+                        .comment(formData.getComment())
+                        .build();
 
-        RatingAverageResponse response = restClient.get()
-                .uri("/api/ratings-average/films/{filmId}", movieId)
-                .retrieve()
-                .body(RatingAverageResponse.class);
+                restClient.put()
+                        .uri("/api/ratings/{reviewId}", reviewId)
+                        .body(request)
+                        .retrieve()
+                        .toBodilessEntity();
+        }
 
-        return response.getAverage();
-    }
+        public Double getAverageRating(Long movieId) {
+
+                try {
+                        RatingAverageResponse response = restClient.get()
+                                .uri("/api/ratings-average/films/{filmId}", movieId)
+                                .retrieve()
+                                .body(RatingAverageResponse.class);
+
+                        return response.getAverage();
+
+                } catch (ResourceAccessException e) {
+                        log.warn("Servicio no disponible");
+                        return null;
+                }
+        }
 }

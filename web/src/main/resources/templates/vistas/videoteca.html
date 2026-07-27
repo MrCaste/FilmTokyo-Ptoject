@@ -73,7 +73,13 @@
 
                             <i class="bi bi-star-fill"></i>
 
-                            <span th:text="${movie.averageRating}"></span>
+                            <span th:if="${movie.reviewServiceAvailable}"
+                                  th:text="${movie.averageRating}">
+                            </span>
+
+                            <span th:unless="${movie.reviewServiceAvailable}">
+                                Servicio no disponible
+                            </span>
 
                             <small>/5</small>
 

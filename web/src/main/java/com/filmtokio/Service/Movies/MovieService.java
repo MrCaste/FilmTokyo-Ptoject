@@ -160,6 +160,7 @@ public class MovieService {
             .poster(movie.getPoster())
             .averageRating(averageRating)
             .director(getDirector(movie))
+            .reviewServiceAvailable(averageRating != null)
             .actors(getActors(movie))
             .build();
     }   
