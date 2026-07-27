@@ -10,7 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.filmtokio.Config.Filter.SimpleBasicAuthFilter;
+import com.filmtokio.Config.Filter.JwtAuthFilter;
+import com.filmtokio.Service.JwtRestService;
 
 import lombok.Getter;
 
@@ -23,18 +24,22 @@ public class SecurityConfig {
     private String apiUser;
     @Value("${api.client.password}")
     private String apiPassword;
+    @Value("${app.security.jwt.secret}")
+    private String secret;
+    @Value("${app.security.jwt.expiration}")
+    private Long expiration;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtRestService jwtRestService) throws Exception {
 
-        final SimpleBasicAuthFilter filter = new SimpleBasicAuthFilter(apiUser, apiPassword);
+        final JwtAuthFilter filter = new JwtAuthFilter(jwtRestService);
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").hasRole("API")
-                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/actuator/**","/authenticate","/v3/api-docs/**","/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
