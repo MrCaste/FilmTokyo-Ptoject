@@ -5,7 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
+import lombok.Getter;
+
 @Configuration
+@Getter
 public class RestClientConfig {
 
     @Value("${app.rest-client.base-url:http://localhost:8081}")

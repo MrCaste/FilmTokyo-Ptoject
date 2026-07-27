@@ -18,6 +18,7 @@
 		<module>rest</module>
 		<module>web</module>
 		<module>common</module>
+		<module>batch</module>
 	</modules>
 	
 	<name>filmtokioproyect</name>

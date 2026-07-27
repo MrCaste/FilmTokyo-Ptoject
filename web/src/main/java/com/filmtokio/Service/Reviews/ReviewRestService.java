@@ -1,14 +1,20 @@
 package com.filmtokio.Service.Reviews;
 
+import com.filmtokio.Config.RestClientConfig;
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 
 import com.filmtokio.DTO.ReviewDTO;
 import com.filmtokio.FormData.ReviewFormData;
+import com.filmtokio.RestDTO.AccessTokenResponse;
 import com.filmtokio.RestDTO.CreateReviewRequest;
 import com.filmtokio.RestDTO.RatingAverageResponse;
 import com.filmtokio.RestDTO.UpdateReviewRequest;
@@ -21,7 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReviewRestService {
 
-    private final RestClient restClient;
+        private String accessToken;
+        private Date tokenExpirationDate;
+
+        private final RestClientConfig restClientConfig;
+        private final RestClient restClient;
     
 
         public List<ReviewDTO> getMovieReviews(Long movieId) {
@@ -29,6 +39,7 @@ public class ReviewRestService {
                 try {
                         return restClient.get()
                                 .uri("/api/review/films/{filmId}", movieId)
+                                .headers(header -> header.setBearerAuth(getAccessToken()))
                                 .retrieve()
                                 .body(new ParameterizedTypeReference<List<ReviewDTO>>() {});
 
@@ -43,6 +54,7 @@ public class ReviewRestService {
                 try {
                         return restClient.get()
                                 .uri("/api/review/films/{filmId}/users/{userId}", movieId, userId)
+                                .headers(header -> header.setBearerAuth(getAccessToken()))
                                 .retrieve()
                                 .body(ReviewDTO.class);
 
@@ -62,6 +74,7 @@ public class ReviewRestService {
 
                 restClient.post()
                         .uri("/api/ratings")
+                        .headers(header -> header.setBearerAuth(getAccessToken()))
                         .body(request)
                         .retrieve()
                         .toBodilessEntity();
@@ -71,6 +84,7 @@ public class ReviewRestService {
 
                 return restClient.get()
                         .uri("/api/ratings/films/{filmId}/users/{userId}/exists", movieId, userId)
+                        .headers(header -> header.setBearerAuth(getAccessToken()))
                         .retrieve()
                         .body(Boolean.class);
         }
@@ -84,6 +98,7 @@ public class ReviewRestService {
 
                 restClient.put()
                         .uri("/api/ratings/{reviewId}", reviewId)
+                        .headers(header -> header.setBearerAuth(getAccessToken()))
                         .body(request)
                         .retrieve()
                         .toBodilessEntity();
@@ -94,6 +109,7 @@ public class ReviewRestService {
                 try {
                         RatingAverageResponse response = restClient.get()
                                 .uri("/api/ratings-average/films/{filmId}", movieId)
+                                .headers(header -> header.setBearerAuth(getAccessToken()))
                                 .retrieve()
                                 .body(RatingAverageResponse.class);
 
@@ -103,5 +119,27 @@ public class ReviewRestService {
                         log.warn("Servicio no disponible");
                         return null;
                 }
+        }
+
+        private String getAccessToken() {
+
+                final Date now = new Date();
+
+                if(accessToken == null || now.after(tokenExpirationDate)) {
+                        final AccessTokenResponse response = restClient.post()
+                                .uri("/authenticate")
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                                .headers(header -> header.setBasicAuth(restClientConfig.getUser(), restClientConfig.getPassword()))
+                                .body("grant_type=client_credentials")
+                                .retrieve()
+                                .body(AccessTokenResponse.class);
+
+                                accessToken = response.getAccessToken();
+                                tokenExpirationDate = new Date(now.getTime() + response.getExpiresIn() * 1000);
+                }
+
+                log.info("Access token expira en {} segundos", (tokenExpirationDate.getTime() - now.getTime()) / 1000);
+
+                return accessToken;
         }
 }
