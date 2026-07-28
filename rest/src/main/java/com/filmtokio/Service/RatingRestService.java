@@ -35,7 +35,7 @@ public class RatingRestService {
                                 new ResponseStatusException(HttpStatus.BAD_REQUEST,
                                         "Película inexistente"));
 
-                User user = userRepository.findByEmailOrUsername(request.getUserName())
+                User user = userRepository.findByEmailOrUsername(request.getEmail())
                         .orElseThrow(() ->
                                 new ResponseStatusException(HttpStatus.BAD_REQUEST,
                                         "Usuario inexistente"));
