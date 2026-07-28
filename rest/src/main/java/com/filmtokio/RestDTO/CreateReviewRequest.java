@@ -19,7 +19,7 @@ public class CreateReviewRequest {
     private Long filmId;
 
     @NotNull
-    private String userName;
+    private String email;
 
     @Min(1)
     @Max(5)

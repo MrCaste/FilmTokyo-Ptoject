@@ -70,7 +70,7 @@ public class ReviewRestService {
                 CreateReviewRequest request = CreateReviewRequest.builder()
                         .filmId(formData.getId())
                         .rating(formData.getRating())
-                        .userName(user.getUsername()) // WARNING: Posible IDOR modificando con BurpSuite el username de otra persona
+                        .email(user.getEmail()) // WARNING: Posible IDOR modificando con BurpSuite el username de otra persona
                         .comment(formData.getComment())
                         .build();
 
