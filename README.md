@@ -46,3 +46,26 @@ Esto es simple, simplemente es un processo batch que lo que hace es escribir en 
 - y fecha en la que se añadió al csv
 
 También se ha tenido que crear una tabla nueva que solo este processo controla para poder tener un registro de las películas que ya se han añadido.
+
+<img width="2485" height="1086" alt="image" src="https://github.com/user-attachments/assets/5788b473-b3c9-4426-8e61-726020f0ebac" />
+<img width="564" height="721" alt="image" src="https://github.com/user-attachments/assets/851042ce-22bb-4bff-aec5-aebdce6dcaa3" />
+<img width="518" height="1079" alt="image" src="https://github.com/user-attachments/assets/ad1c2cf1-c2c0-47cc-8276-76208c7d4787" />
+<img width="540" height="720" alt="image" src="https://github.com/user-attachments/assets/83a66600-26b3-41ed-9896-53c2d68bddb6" />
+<img width="543" height="1051" alt="image" src="https://github.com/user-attachments/assets/9f742271-4c11-4176-8bda-3660ab878779" />
+<img width="2483" height="1302" alt="image" src="https://github.com/user-attachments/assets/7a9bdcfe-f82b-4a08-9dce-ee3db415dfb6" />
+<img width="1547" height="1267" alt="image" src="https://github.com/user-attachments/assets/b99a42e6-f680-488e-9e05-4227f58a65fa" />
+<img width="2478" height="1078" alt="image" src="https://github.com/user-attachments/assets/4a5f56ac-b640-4744-95ce-d46f7ae7cf7c" />
+<img width="1576" height="1094" alt="image" src="https://github.com/user-attachments/assets/9848f7e8-cdd9-483c-b196-22ba9a3b8e22" />
+<img width="1538" height="971" alt="image" src="https://github.com/user-attachments/assets/5d95e5fb-b325-47ca-a26a-203252d372b8" />
+<img width="1522" height="835" alt="image" src="https://github.com/user-attachments/assets/627f9dfb-0461-45b4-ab71-11b82def1232" />
+
+
+
+
+
+
+
+
+
+
+
