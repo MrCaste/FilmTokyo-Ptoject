@@ -13,6 +13,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 
 import com.filmtokio.DTO.ReviewDTO;
+import com.filmtokio.Entities.User;
 import com.filmtokio.FormData.ReviewFormData;
 import com.filmtokio.RestDTO.AccessTokenResponse;
 import com.filmtokio.RestDTO.CreateReviewRequest;
@@ -64,11 +65,12 @@ public class ReviewRestService {
                 }
         }
 
-        public void createReview(ReviewFormData formData) {
-
+        public void createReview(ReviewFormData formData, User user) {
+                
                 CreateReviewRequest request = CreateReviewRequest.builder()
                         .filmId(formData.getId())
                         .rating(formData.getRating())
+                        .userName(user.getUsername())
                         .comment(formData.getComment())
                         .build();
 
@@ -137,6 +139,8 @@ public class ReviewRestService {
                                 accessToken = response.getAccessToken();
                                 tokenExpirationDate = new Date(now.getTime() + response.getExpiresIn() * 1000);
                 }
+
+                log.info("TOKEN = {}", accessToken);
 
                 log.info("Access token expira en {} segundos", (tokenExpirationDate.getTime() - now.getTime()) / 1000);
 

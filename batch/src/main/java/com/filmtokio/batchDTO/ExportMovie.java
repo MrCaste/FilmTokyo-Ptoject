@@ -1,5 +1,7 @@
 package com.filmtokio.batchDTO;
 
+import java.time.LocalDateTime;
+
 import com.filmtokio.Entities.Movies;
 
 import lombok.AllArgsConstructor;
@@ -11,5 +13,6 @@ public class ExportMovie {
 
     private Movies movie;
     private String csvLine;
+    private LocalDateTime exportedAt;
 
 }

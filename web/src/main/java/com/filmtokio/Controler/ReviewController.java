@@ -36,7 +36,7 @@ public class ReviewController {
 
             log.error("Validation errors {}", bindingResult.getAllErrors());
 
-            model.addAttribute("errors", bindingResult.getFieldError().getDefaultMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
 
             return "redirect:/movies/" + id;
         }
@@ -47,7 +47,7 @@ public class ReviewController {
             redirectAttributes.addFlashAttribute("success", "Review updated successfully!");
         } else {
 
-            reviewService.createReview(reviewFormData);
+            reviewService.createReview(reviewFormData, userService.getAuthenticatedUser());
             redirectAttributes.addFlashAttribute("success", "Review created successfully!");
         }
         

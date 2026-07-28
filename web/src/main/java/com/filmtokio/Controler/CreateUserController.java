@@ -40,7 +40,7 @@ public class CreateUserController {
 
             log.error("Validation errors {}", bindingResults.getAllErrors());
 
-            model.addAttribute("errorMessage", bindingResults.getFieldError().getDefaultMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", bindingResults.getFieldError().getDefaultMessage());
 
             return "redirect:/users/new";
         }

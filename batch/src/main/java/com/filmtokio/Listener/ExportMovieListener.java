@@ -1,7 +1,5 @@
 package com.filmtokio.Listener;
 
-import java.time.LocalDateTime;
-
 import org.springframework.batch.core.listener.ItemWriteListener;
 import org.springframework.batch.core.scope.context.JobSynchronizationManager;
 import org.springframework.batch.infrastructure.item.Chunk;
@@ -15,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class ExportMovieListener implements ItemWriteListener<ExportMovie>{
+public class ExportMovieListener implements ItemWriteListener<ExportMovie> {
 
     private final ExportFilmRepository exportFilmRepository;
 
@@ -32,10 +30,9 @@ public class ExportMovieListener implements ItemWriteListener<ExportMovie>{
 
             exported.setJobId(jobId);
             exported.setFilmId(movie.getMovie().getId());
-            exported.setExportedAt(LocalDateTime.now());
+            exported.setExportedAt(movie.getExportedAt()); // <-- usa el objeto del chunk
 
             exportFilmRepository.save(exported);
         }
     }
-
 }

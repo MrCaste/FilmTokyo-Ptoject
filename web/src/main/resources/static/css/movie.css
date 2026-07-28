@@ -154,6 +154,40 @@
     box-shadow:0 5px 15px rgba(0,0,0,.25);
 }
 
+/* ERRORES FORMULARIO */
+
+.form-error{
+
+    background:rgba(255,123,0,.08);
+
+    border:1px solid #ff7b00;
+
+    color:#ff9d32;
+
+    border-radius:15px;
+
+    padding:12px 18px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    box-shadow:
+        0 0 15px rgba(255,123,0,.35);
+
+    animation: errorGlow .4s ease;
+
+}
+
+
+.form-error i{
+
+    margin-right:8px;
+
+}
+
 
 /* ============================
    RATING MEDIA

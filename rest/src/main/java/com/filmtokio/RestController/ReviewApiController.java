@@ -44,7 +44,7 @@ public class ReviewApiController {
     public ResponseEntity<ReviewDTO> getReview(
             @PathVariable Long filmId,
             @PathVariable Long userId) {
-
+                
         return ResponseEntity.ok(ratingRestService.getRating(filmId, userId));
     }
 

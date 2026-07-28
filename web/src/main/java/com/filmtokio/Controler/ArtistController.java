@@ -38,7 +38,7 @@ public class ArtistController {
 
             log.error("Validation errors: {}", bindingResult.getAllErrors());
 
-            model.addAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
 
             return "forms/artist";
         }

@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,51 +30,46 @@ public class RatingRestService {
 
         public void createRating(CreateReviewRequest request) {
 
-        Movies movie = movieRepository.findById(request.getFilmId())
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                                "Película inexistente"));
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                Movies movie = movieRepository.findById(request.getFilmId())
+                        .orElseThrow(() ->
+                                new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                                        "Película inexistente"));
 
-        User user = userRepository.findByEmailOrUsername(auth.getName())
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                                "Usuario inexistente"));
+                User user = userRepository.findByEmailOrUsername(request.getUserName())
+                        .orElseThrow(() ->
+                                new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                                        "Usuario inexistente"));
 
-        if (reviewsRepository.existsByMovieAndUser(movie, user)) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Ya existe una valoración para este usuario y película");
-        }
+                if (reviewsRepository.existsByMovieAndUser(movie, user)) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Ya existe una valoración para este usuario y película");
+                }
 
-        Reviews review = Reviews.builder()
-                .movie(movie)
-                .user(user)
-                .rating(request.getRating())
-                .comment(request.getComment())
-                .createdAt(LocalDateTime.now())
-                .build();
+                Reviews review = Reviews.builder()
+                        .movie(movie)
+                        .user(user)
+                        .rating(request.getRating())
+                        .comment(request.getComment())
+                        .createdAt(LocalDateTime.now())
+                        .build();
 
-        reviewsRepository.save(review);
+                Reviews saved = reviewsRepository.save(review);
+
+                System.out.println("Review guardada: " + saved.getId());
         }
 
         public ReviewDTO getRating(Long movieId, Long userId) {
 
-                Reviews review = reviewsRepository
+                return reviewsRepository
                         .findByMovieIdAndUserId(movieId, userId)
-                        .orElseThrow(() ->
-                                new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
-                                        "Valoración no encontrada"));
-
-                return ReviewDTO.builder()
-                        .comment(review.getComment())
-                        .createdAt(review.getCreatedAt())
-                        .username(review.getUser().getUsername())
-                        .rating(review.getRating())
-                        .build();
-        
+                        .map(review -> ReviewDTO.builder()
+                                .comment(review.getComment())
+                                .createdAt(review.getCreatedAt())
+                                .username(review.getUser().getUsername())
+                                .rating(review.getRating())
+                                .build())
+                        .orElse(null);
         }
 
         public RatingAverageResponse getAverage(Long filmId) {
