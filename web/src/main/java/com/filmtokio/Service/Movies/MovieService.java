@@ -61,14 +61,14 @@ public class MovieService {
         movieRepository.save(movie);
     }
 
-    public void updateMovie(MovieFormData movieFormData) throws IOException {
+    public void updateMovie(MovieFormData movieFormData, Long movieId) throws IOException {
 
         Artists director = artistService.getDirector(movieFormData.getDirector())
                 .orElseThrow(() -> new EntityNotFoundException("Director not found"));
 
         List<Artists> actorsList = artistService.getActors(movieFormData.getActorList());
 
-        Movies movie = movieRepository.findById(movieFormData.getDirector()).orElseThrow(() -> new EntityNotFoundException("No se encontro la pelicula"));
+        Movies movie = movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException("No se encontro la pelicula"));
 
         movie.setTitle(movieFormData.getTitle());
         movie.setReleaseYear(movieFormData.getReleaseYear());

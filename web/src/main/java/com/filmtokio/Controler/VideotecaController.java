@@ -100,7 +100,7 @@ public class VideotecaController {
             return "forms/createFilm";
         }
 
-        movieService.updateMovie(movieFormData);
+        movieService.updateMovie(movieFormData, id);
 
         redirectAttributes.addFlashAttribute("success", "Movie updated successfully!");
 

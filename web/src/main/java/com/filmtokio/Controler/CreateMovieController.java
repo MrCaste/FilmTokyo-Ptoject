@@ -44,6 +44,12 @@ public class CreateMovieController {
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes) throws IOException {
 
+        if (createMovieFormData.getPoster().isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Add a poster");
+
+            return "redirect:/movies/new";
+        }
+
         if (bindingResult.hasErrors()) {
 
             log.error("Validation errors {}", bindingResult.getAllErrors());
